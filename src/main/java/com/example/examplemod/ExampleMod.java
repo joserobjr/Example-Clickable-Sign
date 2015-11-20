@@ -68,10 +68,10 @@ public class ExampleMod
         event.registerServerCommand(new CommandBase()
         {
             @Override
-            public int getRequiredPermissionLevel()
+            public boolean canCommandSenderUseCommand(ICommandSender sender)
             {
                 // Everybody can use this command
-                return 0;
+                return true;
             }
 
             @Override
