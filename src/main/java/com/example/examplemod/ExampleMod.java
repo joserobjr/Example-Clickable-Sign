@@ -42,7 +42,7 @@ public class ExampleMod
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        GameRegistry.registerTileEntity(TileEntityCustomSign.class, MODID+"Sign");
+        GameRegistry.registerTileEntity(TileEntityCustomSign.class, MODID + "Sign");
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -51,6 +51,12 @@ public class ExampleMod
     {
         event.registerServerCommand(new CommandBase()
         {
+            @Override
+            public int getRequiredPermissionLevel()
+            {
+                return 0;
+            }
+
             @Override
             public String getCommandName()
             {
