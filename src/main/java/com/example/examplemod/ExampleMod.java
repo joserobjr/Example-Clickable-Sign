@@ -42,7 +42,7 @@ public class ExampleMod
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        GameRegistry.registerTileEntityWithAlternatives(TileEntityCustomSign.class, MODID+"Sign", "Sign");
+        GameRegistry.registerTileEntity(TileEntityCustomSign.class, MODID+"Sign");
         MinecraftForge.EVENT_BUS.register(this);
     }
 
