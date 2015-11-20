@@ -116,7 +116,7 @@ public class ExampleMod
                         {
                             int i = 0;
                             for (String arg : toolArgs)
-                                signData.setString("arg" + i, arg);
+                                signData.setString("arg" + i++, arg);
                         }
 
                         tileEntity.modData = signData;
