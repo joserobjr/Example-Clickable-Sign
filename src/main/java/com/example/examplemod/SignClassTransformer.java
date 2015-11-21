@@ -3,7 +3,6 @@ package com.example.examplemod;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntitySign;
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.GeneratorAdapter;
 
@@ -13,24 +12,6 @@ import java.lang.reflect.Field;
 
 public class SignClassTransformer implements IClassTransformer
 {
-    class MainTransformer extends GeneratorAdapter
-    {
-        MainTransformer(MethodVisitor delegate, int access, String name, String desc,
-                        String signature, String[] exceptions) {
-            super(Opcodes.ASM5, delegate, access, name, desc);
-        }
-        @Override
-        public void visitInsn(int opcode) {
-            if(opcode==Opcodes.RETURN) {
-                // before return insert c.showTwo();
-                super.visitVarInsn(Opcodes.ALOAD, 1); // variable c
-                super.visitMethodInsn(Opcodes.INVOKEVIRTUAL,
-                        "ClassName", "showTwo", "()V", false);
-            }
-            super.visitInsn(opcode);
-        }
-    }
-
     private static Field exampleModDataField;
 
     private static Field getExampleModDataField(Object sign)
