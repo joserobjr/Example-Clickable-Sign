@@ -51,8 +51,6 @@ public class ExampleMod
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        // The sign on the end isn't required
-        GameRegistry.registerTileEntity(TileEntityCustomSign.class, MODID + "Sign");
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -160,7 +158,7 @@ public class ExampleMod
                         event.world.setBlock(event.x, event.y + 1, event.z, Blocks.standing_sign);
 
                         // We will replace the TileEntitySign to our custom version
-                        TileEntityCustomSign tileEntity = new TileEntityCustomSign();
+                        TileEntitySign tileEntity = new TileEntitySign();
 
                         // We will copy the args that we retrieved to the sign
                         NBTTagCompound signData = new NBTTagCompound();
@@ -171,7 +169,7 @@ public class ExampleMod
                         }
 
                         // Save our custom data and change the sign lines
-                        tileEntity.modData = signData;
+                        SignClassTransformer.setExampleModDataValue(tileEntity, signData);
                         tileEntity.signText[0] = EnumChatFormatting.RED+"[ExampleSign]";
                         tileEntity.signText[1] = "Right-click to";
                         tileEntity.signText[2] = "see all the "+EnumChatFormatting.DARK_BLUE+toolArgs.size();
@@ -194,15 +192,16 @@ public class ExampleMod
         {
             // He clicked on a sign, let's check if it have our custom data
             TileEntity tileEntity = event.world.getTileEntity(event.x, event.y, event.z);
-            if(tileEntity instanceof TileEntityCustomSign)
+            NBTBase modData;
+            if(tileEntity instanceof TileEntitySign && (modData = SignClassTransformer.getExampleModDataValue(tileEntity)) != null)
             {
                 // It has our custom data, let's load and display it.
-                TileEntityCustomSign sign = (TileEntityCustomSign) tileEntity;
+
 
                 // The loading would be easier if we stored an integer with the amount of items as commented before
                 List<String> signArgs = new ArrayList<String>();
                 {
-                    NBTTagCompound tagCompound = (NBTTagCompound) sign.modData;
+                    NBTTagCompound tagCompound = (NBTTagCompound) modData;
                     int i = 0;
                     String arg;
                     while ( ! (arg = tagCompound.getString("arg" + i++)) .isEmpty() )
@@ -212,36 +211,6 @@ public class ExampleMod
                 // Send a chat message showing the args that are stored on this sign
                 event.entityPlayer.addChatMessage(new ChatComponentText("The args are: "+signArgs));
             }
-        }
-    }
-
-    /**
-     * A sign with custom NBT Data
-     */
-    public static class TileEntityCustomSign extends TileEntitySign
-    {
-        /**
-         * The custom data stored on this sign
-         */
-        NBTBase modData = null;
-
-        @Override
-        public void writeToNBT(NBTTagCompound nbtTag)
-        {
-            super.writeToNBT(nbtTag);
-
-            // Add our data after the normal data is written
-            if(modData != null)
-                nbtTag.setTag(TAG_ROOT, modData);
-        }
-
-        @Override
-        public void readFromNBT(NBTTagCompound nbtTag)
-        {
-            super.readFromNBT(nbtTag);
-
-            // Load our data after the normal data is loaded
-            modData = nbtTag.getTag(TAG_ROOT);
         }
     }
 }

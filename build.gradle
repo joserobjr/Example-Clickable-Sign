@@ -19,11 +19,19 @@ apply plugin: 'forge'
 
 version = "1.0"
 group= "com.example" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+//noinspection GroovyUnusedAssignment
 archivesBaseName = "ClickableSign"
 
 minecraft {
     version = "1.7.10-10.13.4.1566-1.7.10"
     runDir = "eclipse"
+}
+
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'com.example.examplemod.ExampleCoreMod',
+                'FMLCorePluginContainsFMLMod': 'true'
+    }
 }
 
 dependencies {
