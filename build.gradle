@@ -27,6 +27,7 @@ minecraft {
     runDir = "eclipse"
 }
 
+// We need to add a custom META-INFO to tell forge to load our coremod
 jar {
     manifest {
         attributes 'FMLCorePlugin': 'com.example.examplemod.ExampleCoreMod',

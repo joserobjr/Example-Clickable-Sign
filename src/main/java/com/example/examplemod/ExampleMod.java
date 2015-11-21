@@ -157,7 +157,7 @@ public class ExampleMod
                         // it's air or not and it will have the default position
                         event.world.setBlock(event.x, event.y + 1, event.z, Blocks.standing_sign);
 
-                        // We will replace the TileEntitySign to our custom version
+                        // We will add our data to a custom field on TileEntitySign
                         TileEntitySign tileEntity = new TileEntitySign();
 
                         // We will copy the args that we retrieved to the sign
@@ -192,6 +192,7 @@ public class ExampleMod
         {
             // He clicked on a sign, let's check if it have our custom data
             TileEntity tileEntity = event.world.getTileEntity(event.x, event.y, event.z);
+            // The modData will be filled if the TileEntitySign has our custom data
             NBTBase modData;
             if(tileEntity instanceof TileEntitySign && (modData = SignClassTransformer.getExampleModDataValue(tileEntity)) != null)
             {
