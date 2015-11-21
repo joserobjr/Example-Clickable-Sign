@@ -107,10 +107,10 @@ public class SignClassTransformer implements IClassTransformer
                 {
                     MethodVisitor methodVisitor = super.visitMethod(access, name, desc, signature, exceptions);
 
-                    if("writeToNBT".equals(name))
+                    if("func_145841_b".equals(name) || "writeToNBT".equals(name))
                         return new SignGeneratorAdapter(methodVisitor, access, name, desc, "writeToNBT");
 
-                    else if("readFromNBT".equals(name))
+                    else if("func_145839_a".equals(name) || "readFromNBT".equals(name))
                         return new SignGeneratorAdapter(methodVisitor, access, name, desc, "readFromNBT");
 
                     return methodVisitor;
